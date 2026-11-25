@@ -24,12 +24,12 @@
     }
   ],
   "selectors": {
-  "username": "input#email, input[name='email']",
-  "password": "input#password, input[name='password']",
-  "loginButton": "button[type='submit']",
-  "startButtonText": "^Start$",
-  "stopButtonText": "^Stop$"
-},
+    "username": "input#email, input[name='email']",
+    "password": "input#password, input[name='password']",
+    "loginButton": "button[type='submit']",
+    "startButtonText": "^Start$",
+    "stopButtonText": "^Stop$"
+  },
   "nodeUnavailablePhrases": [
     "node is currently unavailable",
     "daemon is currently unavailable",
@@ -40,8 +40,8 @@
     "bad gateway"
   ],
   "startingPhrases": [
-    "starting",
     "server is starting",
+    "starting server",
     "installing"
   ],
   "suspendedPhrases": [
