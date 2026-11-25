@@ -1,28 +1,25 @@
 {
-  "monitorIntervalNote": "GitHub Actions runs this worker every 5 minutes. This file configures the three servers.",
   "servers": [
     {
       "name": "Survival",
-      "serverPageUrl": "https://panel.hexacraft.fun/server/37d16377/workspace",
-      "minecraftHost": "legacy-11.hexacraft.fun",
-      "minecraftPort": 25591,
-      "nodeGroup": "unknown"
+      "panelUrl": "https://panel.hexacraft.fun",
+      "serverId": "37d16377",
+      "apiKeyEnv": "HEXACRAFT_API_KEY"
     },
     {
       "name": "Lifesteal",
-      "serverPageUrl": "https://panel.hexacraft.fun/server/9e3334fc/workspace",
-      "minecraftHost": "legacy-11.hexacraft.fun",
-      "minecraftPort": 25582,
-      "nodeGroup": "unknown"
+      "panelUrl": "https://panel.hexacraft.fun",
+      "serverId": "9e3334fc",
+      "apiKeyEnv": "HEXACRAFT_API_KEY"
     },
     {
       "name": "Practice",
-      "serverPageUrl": "https://panel.heavycore.in/server/08925077",
-      "minecraftHost": "p1.heavycore.in",
-      "minecraftPort": 25570,
-      "nodeGroup": "unknown"
+      "panelUrl": "https://panel.heavycore.in",
+      "serverId": "08925077",
+      "apiKeyEnv": "HEAVYCORE_API_KEY"
     }
-  ],
+  ]
+},
   "selectors": {
     "username": "input#email, input[name='email']",
     "password": "input#password, input[name='password']",
