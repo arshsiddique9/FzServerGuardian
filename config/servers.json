@@ -19,30 +19,4 @@
       "apiKeyEnv": "HEAVYCORE_API_KEY"
     }
   ]
-},
-  "selectors": {
-    "username": "input#email, input[name='email']",
-    "password": "input#password, input[name='password']",
-    "loginButton": "button[type='submit']",
-    "startButtonText": "^Start$",
-    "stopButtonText": "^Stop$"
-  },
-  "nodeUnavailablePhrases": [
-    "node is currently unavailable",
-    "daemon is currently unavailable",
-    "could not connect to the node",
-    "failed to connect to the daemon",
-    "node is offline",
-    "gateway timeout",
-    "bad gateway"
-  ],
-  "startingPhrases": [
-    "server is starting",
-    "starting server",
-    "installing"
-  ],
-  "suspendedPhrases": [
-    "suspended",
-    "server is suspended"
-  ]
 }
