@@ -24,12 +24,12 @@
     }
   ],
   "selectors": {
-  "username": "input[name='arshhbibi18@gmail.com']",
-  "password": "input[name='Development99']",
+  "username": "input#email, input[name='email']",
+  "password": "input#password, input[name='password']",
   "loginButton": "button[type='submit']",
   "startButtonText": "^Start$",
   "stopButtonText": "^Stop$"
-}
+},
   "nodeUnavailablePhrases": [
     "node is currently unavailable",
     "daemon is currently unavailable",
