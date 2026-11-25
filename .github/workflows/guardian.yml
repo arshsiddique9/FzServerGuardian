@@ -1,0 +1,59 @@
+name: FzServerGuardian
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fzserverguardian-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Restore monitoring cooldown state
+        uses: actions/cache/restore@v4
+        with:
+          path: state/guardian-state.json
+          key: fzguardian-state-${{ github.run_id }}
+          restore-keys: |
+            fzguardian-state-
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run FzServerGuardian
+        env:
+          PANEL_URL: ${{ secrets.PANEL_URL }}
+          PANEL_USERNAME: ${{ secrets.PANEL_USERNAME }}
+          PANEL_PASSWORD: ${{ secrets.PANEL_PASSWORD }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          HEADLESS: "true"
+          OFFLINE_CONFIRMATIONS: "2"
+          START_COOLDOWN_MINUTES: "60"
+        run: npm start
+
+      - name: Save monitoring cooldown state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state/guardian-state.json
+          key: fzguardian-state-${{ github.run_id }}
