@@ -15,7 +15,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12      # 8 se badha do, diagnostic extra time lega
+    timeout-minutes: 8
 
     steps:
       - name: Checkout project
@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Restore monitoring cooldown state
+      - name: Restore monitoring state
         uses: actions/cache/restore@v4
         with:
           path: state/guardian-state.json
@@ -37,41 +37,33 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
-
-      - name: Run FzServerGuardian
+      - name: Test Pterodactyl API
+        continue-on-error: true
         env:
-          PANEL_URL: ${{ secrets.PANEL_URL }}
-          PANEL_USERNAME: ${{ secrets.PANEL_USERNAME }}
-          PANEL_PASSWORD: ${{ secrets.PANEL_PASSWORD }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          HEADLESS: "true"
-          OFFLINE_CONFIRMATIONS: "2"
-          START_COOLDOWN_MINUTES: "60"
-        run: npm start
+          HEXACRAFT_API_KEY: ${{ secrets.HEXACRAFT_API_KEY }}
+          HEAVYCORE_API_KEY: ${{ secrets.HEAVYCORE_API_KEY }}
+        run: npm run test-api
 
-      # 👇👇👇 DIAGNOSTIC STEPS YAHAN ADD KARO 👇👇👇
-      - name: Run diagnostic
-        if: always()
-        env:
-          PANEL_URL: ${{ secrets.PANEL_URL }}
-          PANEL_USERNAME: ${{ secrets.PANEL_USERNAME }}
-          PANEL_PASSWORD: ${{ secrets.PANEL_PASSWORD }}
-          HEADLESS: "true"
-        run: npm run diagnose
-
-      - name: Upload diagnostic output
+      - name: Upload API test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: diagnose-output-${{ github.run_id }}
-          path: diagnose-out/
+          name: api-test-report-${{ github.run_id }}
+          path: diagnose-out/api-test-report.*
           if-no-files-found: ignore
           retention-days: 3
-      # 👆👆👆 YAHAN TAK 👆👆👆
 
-      - name: Save monitoring cooldown state
+      - name: Run FzServerGuardian (API mode)
+        env:
+          HEXACRAFT_API_KEY: ${{ secrets.HEXACRAFT_API_KEY }}
+          HEAVYCORE_API_KEY: ${{ secrets.HEAVYCORE_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          OFFLINE_CONFIRMATIONS: "2"
+          START_COOLDOWN_MINUTES: "60"
+          START_VERIFY_WAIT_MS: "120000"
+        run: npm start
+
+      - name: Save monitoring state
         if: always()
         uses: actions/cache/save@v4
         with:
