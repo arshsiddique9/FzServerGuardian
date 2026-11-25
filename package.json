@@ -1,13 +1,14 @@
 {
   "name": "fzserverguardian",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Browser-based Pterodactyl server monitor and recovery worker",
-  "main": "src/index.js",
+  "description": "Pterodactyl API-based server monitor and recovery worker",
+  "main": "src/guardian-api.js",
   "scripts": {
-    "start": "node src/index.js",
-    "check": "node --check src/index.js && node --check src/guardian.js",
-    "diagnose": "node src/diagnose.js"
+    "start": "node src/guardian-api.js",
+    "start:browser": "node src/index.js",
+    "test-api": "node src/test-api.js",
+    "check": "node --check src/guardian-api.js && node --check src/test-api.js && node --check src/index.js && node --check src/guardian.js"
   },
   "dependencies": {
     "playwright": "1.56.1"
