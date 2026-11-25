@@ -15,7 +15,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 12      # 8 se badha do, diagnostic extra time lega
 
     steps:
       - name: Checkout project
@@ -50,6 +50,26 @@ jobs:
           OFFLINE_CONFIRMATIONS: "2"
           START_COOLDOWN_MINUTES: "60"
         run: npm start
+
+      # 👇👇👇 DIAGNOSTIC STEPS YAHAN ADD KARO 👇👇👇
+      - name: Run diagnostic
+        if: always()
+        env:
+          PANEL_URL: ${{ secrets.PANEL_URL }}
+          PANEL_USERNAME: ${{ secrets.PANEL_USERNAME }}
+          PANEL_PASSWORD: ${{ secrets.PANEL_PASSWORD }}
+          HEADLESS: "true"
+        run: npm run diagnose
+
+      - name: Upload diagnostic output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnose-output-${{ github.run_id }}
+          path: diagnose-out/
+          if-no-files-found: ignore
+          retention-days: 3
+      # 👆👆👆 YAHAN TAK 👆👆👆
 
       - name: Save monitoring cooldown state
         if: always()
