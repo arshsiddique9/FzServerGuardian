@@ -1,0 +1,51 @@
+{
+  "monitorIntervalNote": "GitHub Actions runs this worker every 5 minutes. This file configures the three servers.",
+  "servers": [
+    {
+      "name": "Survival",
+      "serverPageUrl": "https://panel.example.com/server/REPLACE_WITH_SURVIVAL_IDENTIFIER",
+      "minecraftHost": "play.example.com",
+      "minecraftPort": 25565,
+      "nodeGroup": "unknown"
+    },
+    {
+      "name": "Lifesteal",
+      "serverPageUrl": "https://panel.example.com/server/REPLACE_WITH_LIFESTEAL_IDENTIFIER",
+      "minecraftHost": "play.example.com",
+      "minecraftPort": 25566,
+      "nodeGroup": "unknown"
+    },
+    {
+      "name": "Practice",
+      "serverPageUrl": "https://panel.example.com/server/REPLACE_WITH_PRACTICE_IDENTIFIER",
+      "minecraftHost": "play.example.com",
+      "minecraftPort": 25567,
+      "nodeGroup": "unknown"
+    }
+  ],
+  "selectors": {
+    "username": "input[name='email']",
+    "password": "input[name='password']",
+    "loginButton": "button[type='submit']",
+    "startButtonText": "^Start$",
+    "stopButtonText": "^Stop$"
+  },
+  "nodeUnavailablePhrases": [
+    "node is currently unavailable",
+    "daemon is currently unavailable",
+    "could not connect to the node",
+    "failed to connect to the daemon",
+    "node is offline",
+    "gateway timeout",
+    "bad gateway"
+  ],
+  "startingPhrases": [
+    "starting",
+    "server is starting",
+    "installing"
+  ],
+  "suspendedPhrases": [
+    "suspended",
+    "server is suspended"
+  ]
+}
